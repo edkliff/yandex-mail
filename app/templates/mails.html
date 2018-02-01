@@ -6,10 +6,10 @@
         <table>
             {% for user in users %}
             <tr>
-                <td>{{ user[1] }}</td>
+                <td><a href="/edit/{{ user[0] }}">{{ user[1] }}</a></td>
                 <td>{{ user[2] }}</td>
                 <td>{{ user[3] }}</td>
-                <td><a href="/delete/{{ domain }}/{{ user[0] }}">Delete User</a></td>
+                <td><a href="/delete/{{ domain }}/{{ user[0] }}">Delete User</a>></td>
             </tr>
             {% endfor %}
         </table>

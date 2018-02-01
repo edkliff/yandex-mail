@@ -27,7 +27,8 @@ def get_user_info(users_raw):
     users.extend(tuple(map(lambda account: (account['uid'],
                                             account['login'],
                                             account['iname'],
-                                            account['fname']), user_accounts)))
+                                            account['fname'],
+                                            account['enabled']), user_accounts)))
     return users
 
 
@@ -38,6 +39,11 @@ def delete_user(uid, api_key, domain):
                           data=data, method='POST', headers=header)
     resp = request.urlopen(req).read()
     return resp
+
+
+def edit_user(uid, name, sname, enabled, api_key, domain):
+    header = {'PddToken': api_key}
+    data = parse.urlencode({'domain': domain, 'uid': uid, }).encode()
 
 
 def response_parse(response):

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <center>
+        <h3>New mail</h3>
+        <form action="" method="post">
+            {{ form.hidden_tag() }}
+        <p>
+            {{ form.name.label }}<br>
+            {{ form.name(size = 32) }}
+        </p>
+        <p>
+            {{ form.sname.label }}<br>
+            {{ form.sname(size=32) }}
+        </p>
+        <p>
+            {{ form.enabled }} {{ form.enabled.label }}
+        </p>
+        <p>{{ form.submit() }}</p>
+        </form>
+    </center>
+{% endblock %}

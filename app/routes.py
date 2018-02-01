@@ -1,5 +1,5 @@
 from app import app
-from app.forms import MailCreator
+from app.forms import MailCreator, EditUser
 from flask import render_template, redirect, flash
 from functions import get_user_info, get_users, add_user, delete_user, response_parse
 import config
@@ -58,6 +58,34 @@ def delete_mail(user_id, domain):
         flash('User deletion was finished with status {}, Error decription: {}'
               .format(resp['success'], resp['error']))
     return redirect('/mails/{}'.format(domain))
+
+
+@app.route('/edit/<int:userid>', methods=['GET', 'POST'])
+def edit_mail(userid):
+    users = []
+    account = ()
+    for d in config.DOMAIN_KEY:
+        domain_data = config.DOMAIN_KEY[d]
+        raw_users = get_users(domain_data[1], domain_data[0])
+        this_domain_users = get_user_info(raw_users)
+        users.extend(this_domain_users)
+    for i in users:
+        if i[0] == userid:
+            print(i)
+            account = i
+    form = EditUser()
+    form.user_id.data = account[0]
+    form.name.data = account[2]
+    form.sname.data = account[3]
+    if account[4] == 'yes':
+        form.enabled.data = True
+    else:
+        form.enabled.data = False
+    if form.validate_on_submit():
+        print(form.user_id.data, form.name.data,
+              form.sname.data, form.enabled.data)
+    return render_template('edit_user.html', title='Edit user',
+                           form=form, companies=companies)
 
 
 @app.route('/')
