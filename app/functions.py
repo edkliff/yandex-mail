@@ -37,6 +37,10 @@ def del_user(uid, api_key, domain):
     return resp
 
 
+def response_parse(response):
+    response_dict = json.loads((response.decode()))
+    return response_dict
+
 # add_user('test', 'test1234', config.KEY, config.DOMAIN)
 #
 # domains = tuple(config.DOMAIN_KEY.keys())
