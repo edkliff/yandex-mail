@@ -15,7 +15,6 @@ def new():
         domain_data = config.DOMAIN_KEY[form.domain.data]
         resp = add_user(form.login.data, form.password.data, domain_data[1], domain_data[0])
         resp = response_parse(resp)
-        print(resp)
         if resp['success'] == 'ok':
             flash('User creation was finished with status {}, User: {}, UID: {}'.format(resp['success'], resp['login'],
                                                                                         resp['uid']))
@@ -36,7 +35,13 @@ def mails(domain):
 @app.route('/delete/<domain>/<int:user_id>')
 def delete_mail(user_id, domain):
     domain_data = config.DOMAIN_KEY[domain]
-    del_user(user_id, domain_data[1], domain_data[0])
+    resp = del_user(user_id, domain_data[1], domain_data[0])
+    resp = response_parse(resp)
+    if resp['success'] == 'ok':
+        flash('User deletion was finished with status {}'.format(resp['success']))
+    else:
+        flash('User deletion was finished with status {}, Error decription: {}'.format(resp['success'],
+                                                                                       resp['error']))
     return redirect('/mails/{}'.format(domain))
 
 
