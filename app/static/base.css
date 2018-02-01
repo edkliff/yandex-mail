@@ -1,0 +1,49 @@
+a {
+    color: black;
+    text-decoration: underline
+}
+
+a:hover {
+    color: grey;
+    text-decoration: underline
+}
+
+table {
+    border-collapse: collapse;
+    border: 0px solid black;
+    width: 100%;
+}
+
+tr {
+    border-bottom: 1px solid black;
+
+}
+
+td {
+    padding: 10px;
+    padding-right: 30px;
+    border: 0px solid black;
+}
+
+hr {
+    padding: 0px;
+    border: 1px solid black;
+}
+
+body {
+    font-size: 16px;
+    max-width: 1024px;
+    margin: 0 auto;
+}
+
+hr {
+    color: black;
+    size: 2px;
+}
+
+.flex-cont-space-around {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+}

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <center>
+        <h3>New mail</h3>
+        <form action="" method="post">
+            {{ form.hidden_tag() }}
+        <p>
+            {{ form.login.label }}<br>
+            {{ form.login(size = 48) }} {{ form.domain(size = 1) }}
+        </p>
+        <p>
+            {{ form.password.label }}<br>
+            {{ form.password(size=64) }}
+        </p>
+        <p>{{ form.submit() }}</p>
+        </form>
+    </center>
+{% endblock %}

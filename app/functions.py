@@ -1,6 +1,6 @@
-from urllib import request, parse
-from app import config
 import json
+from urllib import request, parse
+
 
 def add_user(username, password, api_key, domain):
     header = {'PddToken': api_key}
@@ -28,6 +28,7 @@ def get_user_info(users_raw):
         users.append(user)
     return users
 
+
 def del_user(uid, api_key, domain):
     header = {'PddToken': api_key}
     data = parse.urlencode({'domain': domain, 'uid': uid,}).encode()
@@ -35,10 +36,14 @@ def del_user(uid, api_key, domain):
     resp = request.urlopen(req).read()
     return resp
 
+
 # add_user('test', 'test1234', config.KEY, config.DOMAIN)
 #
-users_response = get_users(config.KEY, config.DOMAIN)
-print(get_user_info(users_response))
+# domains = tuple(config.DOMAIN_KEY.keys())
+# print(domains)
+#
+# users_response = get_users(config.DOMAIN_KEY, config.DOMAIN)
+# print(get_user_info(users_response))
 
 #
 # del_user(1130000026629310, config.KEY, config.DOMAIN)

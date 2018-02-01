@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <center>
+        <h3>Users - {{ domain }}</h3>
+        <table>
+            {% for user in users %}
+            <tr>
+                <td>{{ user[1] }}</td>
+                <td>{{ user[2] }}</td>
+                <td>{{ user[3] }}</td>
+                <td><a href="/delete/{{ domain }}/{{ user[0] }}">Delete User</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </center>
+{% endblock %}
