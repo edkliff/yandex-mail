@@ -32,6 +32,17 @@ def mails(domain):
     return render_template('mails.html', title='Users', users=users, domain=domain, companies=companies)
 
 
+@app.route('/mails')
+def all_mails():
+    users = []
+    for d in config.DOMAIN_KEY:
+        domain_data = config.DOMAIN_KEY[d]
+        raw_users = get_users(domain_data[1], domain_data[0])
+        this_domain_users = get_user_info(raw_users)
+        users.extend(this_domain_users)
+    return render_template('mails.html', title='Users', users=users, domain='All', companies=companies)
+
+
 @app.route('/delete/<domain>/<int:user_id>')
 def delete_mail(user_id, domain):
     domain_data = config.DOMAIN_KEY[domain]
@@ -40,8 +51,7 @@ def delete_mail(user_id, domain):
     if resp['success'] == 'ok':
         flash('User deletion was finished with status {}'.format(resp['success']))
     else:
-        flash('User deletion was finished with status {}, Error decription: {}'.format(resp['success'],
-                                                                                       resp['error']))
+        flash('User deletion was finished with status {}, Error decription: {}'.format(resp['success'], resp['error']))
     return redirect('/mails/{}'.format(domain))
 
 

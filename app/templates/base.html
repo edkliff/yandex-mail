@@ -10,6 +10,10 @@
     <body>
         <center>
             <div class="flex-cont-space-around">
+                <div>
+                    <a href="/mails">All</a>
+                </div>
+
                 {% for company in companies %}
                     <div>
                         <a href="/mails/{{ company }}">{{ company }} </a>
@@ -29,7 +33,7 @@
         {% if messages %}
         <ul>
             {% for message in messages %}
-            <li>{{ message }}</li>
+                <li>{{ message }}</li>
             {% endfor %}
         </ul>
         {% endif %}
