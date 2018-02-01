@@ -5,7 +5,7 @@ from functions import get_user_info, get_users, add_user, del_user
 import config
 
 
-companies = config.DOMAIN_KEY.keys()
+companies = tuple(config.DOMAIN_KEY.keys())
 
 
 @app.route('/new', methods=['GET', 'POST'])
@@ -39,4 +39,4 @@ def delete_mail(user_id, domain):
 
 @app.route('/')
 def index():
-    return redirect('/new')
+    return redirect('/mails/{}'.format(companies[0]))
