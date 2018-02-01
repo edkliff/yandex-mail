@@ -41,6 +41,18 @@ hr {
     size: 2px;
 }
 
+input {
+     border: 1px solid black;
+     max-width: 512px
+}
+
+select {
+    color: black;
+    background: white;
+    width: 122px;
+    border-color: black;
+}
+
 .flex-cont-space-around {
     display: flex;
     flex-direction: row;

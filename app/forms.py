@@ -8,6 +8,7 @@ domains = tuple(DOMAIN_KEY.keys())
 
 class MailCreator(FlaskForm):
     login = StringField('Username', validators=[DataRequired()])
-    domain = SelectField('Domain', choices=[(domain, domain) for domain in domains])
+    domain = SelectField('Domain', choices=[(domain,
+                                             '@{}'.format(DOMAIN_KEY[domain][0])) for domain in domains])
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Add User')
