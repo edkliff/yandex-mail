@@ -29,7 +29,8 @@ def mails(domain):
     domain_data = config.DOMAIN_KEY[domain]
     raw_users = get_users(domain_data[1], domain_data[0])
     users = get_user_info(raw_users)
-    return render_template('mails.html', title='Users', users=users, domain=domain, companies=companies)
+    return render_template('mails.html', title='{} Users'.format(domain),
+                           users=users, domain=domain, companies=companies)
 
 
 @app.route('/mails')
@@ -40,7 +41,7 @@ def all_mails():
         raw_users = get_users(domain_data[1], domain_data[0])
         this_domain_users = get_user_info(raw_users)
         users.extend(this_domain_users)
-    return render_template('mails.html', title='Users', users=users, domain='All', companies=companies)
+    return render_template('mails.html', title='Users', users=users, domain='All users', companies=companies)
 
 
 @app.route('/delete/<domain>/<int:user_id>')
@@ -57,4 +58,4 @@ def delete_mail(user_id, domain):
 
 @app.route('/')
 def index():
-    return redirect('/mails/{}'.format(companies[0]))
+    return redirect('/mails')
