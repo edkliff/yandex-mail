@@ -19,3 +19,4 @@ class Config(object):
     
 4) run app
 
+5) enjoy simple creation with web-interface on http://your-server/ !
