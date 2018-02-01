@@ -21,7 +21,7 @@ class Config(object):
 
 4) run app
 
-5) enjoy simple creation with web-interface on http://your-server:5000/ !
+5) enjoy simple creation with web-interface on http://your-server:5000/
 
 WARNING!
 It's not secure tool, and i don't use authorization
