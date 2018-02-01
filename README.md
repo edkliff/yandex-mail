@@ -6,7 +6,7 @@ Small web-tool for yandex-pdd managment.
 
 3) configure it like in template
 
-**config.py structure:**
+**config.py structure:** (see raw for format)
     
 DOMAIN_KEY = {'domain_name_inside1': ('domain_name_in_yandex', 'yandex_pdd_api_key'),
               'domain_name_inside2': ('domain_name_in_yandex', 'yandex_pdd_api_key'),
