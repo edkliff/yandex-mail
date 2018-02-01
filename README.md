@@ -20,3 +20,6 @@ class Config(object):
 4) run app
 
 5) enjoy simple creation with web-interface on http://your-server/ !
+
+WARNING!
+It's not secure tool, and i don't use authorization
