@@ -22,31 +22,22 @@
                             <a href="/mails/{{ company }}">{{ company }} </a>
                         </div>
                     {% endfor %}
-                    <div>
-                        <a href="/new"><img src="/static/images/new.png" alt="New User"></a>
+                    <div class="flex-right">
+                        <div>
+                            <a href="/messages"><img src="/static/images/logs.png" title="Logs" alt="Logs"></a>
+                        </div>
+                        <div>
+                            <a href="/new"><img src="/static/images/new.png" title="New User" alt="New User"></a>
+                        </div>
                     </div>
                 </div>
                 <hr>
             </div>
-            <div class="blocks-flex">
-                <div class="main-screen">
-                    {% block content %}{% endblock %}
-                    <hr>
-                </div>
-                <div class="logs">
-                    <h5>Messages</h5>
-                    {% with messages = get_flashed_messages() %}
-                    {% if messages %}
-                    <ul>
-                        {% for message in messages %}
-                            <li>{{ message }}</li>
-                        {% endfor %}
-                    </ul>
-                    {% endif %}
-                    {% endwith %}
-                </div>
-
+            <div class="header">
+                {% block content %}{% endblock %}
             </div>
+            <hr>
+
 
         </center>
     </body>
