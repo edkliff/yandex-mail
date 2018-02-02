@@ -1,7 +1,8 @@
 from app import app
 from app.forms import MailCreator, EditUser
-from flask import render_template, redirect, flash
-from functions import get_user_info, get_users, add_user, delete_user, domain_from_login, response_parse, edit_user
+from flask import render_template, redirect
+from functions import get_user_info, get_users, add_user, edit_user
+from functions import delete_user, domain_from_login, console_output
 import config
 
 
@@ -15,16 +16,11 @@ def new():
         domain_data = config.DOMAIN_KEY[form.domain.data]
         resp = add_user(form.login.data, form.password.data,
                         domain_data[1], domain_data[0])
-        resp = response_parse(resp)
-        if resp['success'] == 'ok':
-            flash('User creation was finished with status {}, User: {}, UID: {}'
-                  .format(resp['success'], resp['login'], resp['uid']))
-        else:
-            flash('User creation was finished with status {}, Error decription: {}'
-                  .format(resp['success'], resp['error']))
+        console_output(resp, 'User creation')
         return redirect('/mails/{}'.format(form.domain.data))
     return render_template('new_user.html', title='New user',
                            form=form, companies=companies)
+
 
 @app.route('/mails/<domain>')
 def mails(domain):
@@ -51,12 +47,7 @@ def all_mails():
 def delete_mail(user_id, domain):
     domain_data = config.DOMAIN_KEY[domain]
     resp = delete_user(user_id, domain_data[1], domain_data[0])
-    resp = response_parse(resp)
-    if resp['success'] == 'ok':
-        flash('User deletion was finished with status {}'.format(resp['success']))
-    else:
-        flash('User deletion was finished with status {}, Error decription: {}'
-              .format(resp['success'], resp['error']))
+    console_output(resp, 'User deletion')
     return redirect('/mails/{}'.format(domain))
 
 
@@ -83,19 +74,14 @@ def edit_mail(userid):
         resp = edit_user(form.user_id.data, form.name.data,
                          form.sname.data, form.enabled.data,
                          domain_data[1], domain_data[0])
-        resp = response_parse(resp)
-        if resp['success'] == 'ok':
-            flash('User editing was finished with status {}, User: {}, UID: {}'
-                  .format(resp['success'], resp['login'], resp['uid']))
-        else:
-            flash('User editing was finished with status {}, Error decription: {}'
-                  .format(resp['success'], resp['error']))
+        console_output(resp, 'User editing')
         return redirect('/mails')
     form.name.data = account[2]
     form.sname.data = account[3]
     form.enabled.data = account[4]
     return render_template('edit_user.html', title='Edit user',
-                           form=form, companies=companies, user=account[1])
+                           form=form, companies=companies,
+                           user=account[1])
 
 
 @app.route('/')

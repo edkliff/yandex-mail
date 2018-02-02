@@ -1,5 +1,6 @@
 import json
 from urllib import request, parse
+from flask import flash
 
 
 def add_user(username, password, api_key, domain):
@@ -70,7 +71,19 @@ def user_enabled_parser(enabled):
         return True
     return False
 
+
 def user_enabled_changer(enabled):
     if enabled:
         return 'yes'
     return 'no'
+
+
+def console_output(response, process):
+    resp = response_parse(response)
+    if resp['success'] == 'ok':
+        flash('{} was finished with status {}, User: {}, UID: {}'
+              .format(process, resp['success'], resp['login'],
+                      resp['uid'] if resp.get('uid') else 'Not defined'))
+    else:
+        flash('{} was finished with status {}, Error decription: {}'
+              .format(process, resp['success'], resp['error']))
