@@ -44,7 +44,7 @@ def all_mails():
         this_domain_users = get_user_info(raw_users)
         users.extend(this_domain_users)
     return render_template('mails.html', title='Users', users=users,
-                           domain='All users', companies=companies)
+                           domain='all', companies=companies)
 
 
 @app.route('/delete/<domain>/<int:user_id>')

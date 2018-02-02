@@ -28,7 +28,9 @@ def get_user_info(users_raw):
                                             account['login'],
                                             account['iname'],
                                             account['fname'],
-                                            account['enabled']), user_accounts)))
+                                            account['enabled'],
+                                            domain_from_login(account['login'])),
+                           user_accounts)))
     return users
 
 
@@ -49,3 +51,6 @@ def edit_user(uid, name, sname, enabled, api_key, domain):
 def response_parse(response):
     response_dict = json.loads((response.decode()))
     return response_dict
+
+def domain_from_login(login):
+    return login.split('@')[1].split('.')[0]
