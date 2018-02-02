@@ -71,7 +71,7 @@ select {
 }
 
 .main-screen {
-    max-width: 800px;
+    width: 800px;
     background: #E0DDDD;
 }
 

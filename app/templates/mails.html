@@ -13,16 +13,16 @@
 
                     <td>
                         {% if user[4] %}
-                        Active
+                        <img src="/static/images/active.png" alt="Active">
                         {% else %}
-                        Not Active
+                        <img src="/static/images/blocked.png" alt="Blocked">
                         {% endif %}
                     </td>
                     <td><a href="/edit/{{ user[0] }}">{{ user[1] }}</a></td>
                     <td>{{ user[2] }}</td>
                     <td>{{ user[3] }}</td>
-                    <td><a href="/delete/{{ user[5] }}/{{ user[0] }}">Delete User</a></td>
-                    <td><a href="/edit/{{ user[0] }}">Edit User</a></td>
+                    <td><a href="/edit/{{ user[0] }}"><img src="/static/images/edit.png" alt="Edit User"></a></td>
+                    <td><a href="/delete/{{ user[5] }}/{{ user[0] }}"><img src="/static/images/delete.png" alt="Delete User"> </a></td>
                 </tr>
             {% endfor %}
         </table>
