@@ -11,6 +11,8 @@
                     <li>{{ message }}</li>
                 {% endfor %}
             </ul>
+            {% else %}
+                Message pool is empty
             {% endif %}
             {% endwith %}
         </div>
