@@ -3,6 +3,7 @@ from urllib import request, parse
 from flask import flash
 import config
 
+
 def add_user(username, password, api_key, domain):
     """
     Yandex API POST request for user creation
