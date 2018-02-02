@@ -57,7 +57,7 @@ select {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
     margin: 5 25 5 25;
     background: #E0DDDD;
 }

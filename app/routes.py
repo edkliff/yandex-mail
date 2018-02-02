@@ -12,6 +12,11 @@ companies = tuple(config.DOMAIN_KEY.keys())
 # New user creation
 @app.route('/new', methods=['GET', 'POST'])
 def new_account():
+    """
+    New user account
+    :form: AccountCreator
+    :return: New user form or redirect to domain list
+    """
     form = AccountCreator()
     if form.validate_on_submit():
         domain_data = config.DOMAIN_KEY[form.domain.data]
@@ -26,6 +31,11 @@ def new_account():
 # List of all users in domain
 @app.route('/mails/<domain>')
 def domain_accounts(domain):
+    """
+    List accounts on domain
+    :param domain: domain for listing
+    :return: domain accounts list page
+    """
     domain_data = config.DOMAIN_KEY[domain]
     users = get_users(domain_data[1], domain_data[0])
     return render_template('mails.html', title='{} users'.format(domain),
@@ -35,6 +45,10 @@ def domain_accounts(domain):
 # List of all users in all domains
 @app.route('/mails')
 def all_accounts():
+    """
+    List all accounts on all domains
+    :return: accounts list page
+    """
     users = []
     for d in config.DOMAIN_KEY:
         domain_data = config.DOMAIN_KEY[d]
@@ -47,6 +61,12 @@ def all_accounts():
 # User deletion
 @app.route('/delete/<domain>/<int:user_id>')
 def delete_account(user_id, domain):
+    """
+    Delete user
+    :param user_id: user_id for deletion
+    :param domain: domain for user
+    :return: domain accounts list page
+    """
     domain_data = config.DOMAIN_KEY[domain]
     resp = delete_user(user_id, domain_data[1], domain_data[0])
     console_output(resp, 'User deletion')
@@ -56,6 +76,11 @@ def delete_account(user_id, domain):
 # User editing
 @app.route('/edit/<int:user_id>', methods=['GET', 'POST'])
 def edit_account(user_id):
+    """
+    User editing
+    :param user_id: user_id for editing
+    :return: domain accounts list page
+    """
     users = []
 
     for d in config.DOMAIN_KEY:
@@ -84,6 +109,10 @@ def edit_account(user_id):
 # Logs
 @app.route('/messages')
 def messages():
+    """
+    Logs
+    :return: list of logs
+    """
     return render_template('messages.html', title='Messages',
                            domain='all', companies=companies)
 
