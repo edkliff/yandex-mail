@@ -32,8 +32,8 @@ hr {
 
 body {
     font-size: 16px;
-    max-width: 1024px;
     margin: 0 auto;
+    background: #E0DDDD;
 }
 
 hr {
@@ -58,4 +58,37 @@ select {
     flex-direction: row;
     justify-content: space-between;
     align-items: flex-start;
+    margin: 5 25 5 25;
+    background: #E0DDDD;
+}
+
+.active-user {
+    background: #E0DDDD;
+}
+
+.non-active-user {
+    background: #E0DDCD;
+}
+
+.main-screen {
+    width: 800px;
+    background: #E0DDDD;
+}
+
+.logs {
+    width: 200px;
+}
+
+.blocks-flex {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: stretch;
+    background: #E0DDDD;
+
+}
+
+.header {
+    max-width: 1024px;
+    background: #E0DDDD;
 }

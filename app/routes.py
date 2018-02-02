@@ -57,6 +57,7 @@ def delete_account(user_id, domain):
 @app.route('/edit/<int:user_id>', methods=['GET', 'POST'])
 def edit_account(user_id):
     users = []
+
     for d in config.DOMAIN_KEY:
         domain_data = config.DOMAIN_KEY[d]
         this_domain_users = get_users(domain_data[1], domain_data[0])
@@ -64,12 +65,14 @@ def edit_account(user_id):
     account, domain, domain_data = find_user_in_lists(user_id, users)
     form = EditUser()
     form.user_id.data = account[0]
+
     if form.validate_on_submit():
         resp = edit_user(form.user_id.data, form.name.data,
                          form.sname.data, form.enabled.data,
                          domain_data[1], domain_data[0])
         console_output(resp, 'User editing')
         return redirect('/mails/{}'.format(domain))
+
     form.name.data = account[2]
     form.sname.data = account[3]
     form.enabled.data = account[4]

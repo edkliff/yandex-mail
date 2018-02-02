@@ -13,9 +13,10 @@ class AccountCreator(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Add User')
 
+
 class EditUser(FlaskForm):
     user_id = StringField('User ID', validators=[DataRequired()])
     name = StringField('First Name')
-    sname = StringField('Family Name')
+    sname = StringField('Second Name')
     enabled = BooleanField('Enabled')
     submit = SubmitField('Edit User')
