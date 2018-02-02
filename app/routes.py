@@ -1,75 +1,75 @@
 from app import app
-from app.forms import MailCreator, EditUser
+from app.forms import AccountCreator, EditUser
 from flask import render_template, redirect
-from functions import get_user_info, get_users, add_user, edit_user
+from functions import get_users, add_user, edit_user
 from functions import delete_user, domain_from_login, console_output
 import config
 
-
+# List of all companies
 companies = tuple(config.DOMAIN_KEY.keys())
 
 
+# New user creation
 @app.route('/new', methods=['GET', 'POST'])
-def new():
-    form = MailCreator()
+def new_account():
+    form = AccountCreator()
     if form.validate_on_submit():
         domain_data = config.DOMAIN_KEY[form.domain.data]
-        resp = add_user(form.login.data, form.password.data,
-                        domain_data[1], domain_data[0])
-        console_output(resp, 'User creation')
+        response = add_user(form.login.data, form.password.data,
+                            domain_data[1], domain_data[0])
+        console_output(response, 'User creation')
         return redirect('/mails/{}'.format(form.domain.data))
     return render_template('new_user.html', title='New user',
                            form=form, companies=companies)
 
 
+# List of all users in domain
 @app.route('/mails/<domain>')
-def mails(domain):
+def domain_accounts(domain):
     domain_data = config.DOMAIN_KEY[domain]
-    raw_users = get_users(domain_data[1], domain_data[0])
-    users = get_user_info(raw_users)
+    users = get_users(domain_data[1], domain_data[0])
     return render_template('mails.html', title='{} users'.format(domain),
                            users=users, domain=domain, companies=companies)
 
 
+# List of all users in all domains
 @app.route('/mails')
-def all_mails():
+def all_accounts():
     users = []
     for d in config.DOMAIN_KEY:
         domain_data = config.DOMAIN_KEY[d]
-        raw_users = get_users(domain_data[1], domain_data[0])
-        this_domain_users = get_user_info(raw_users)
+        this_domain_users = get_users(domain_data[1], domain_data[0])
         users.extend(this_domain_users)
     return render_template('mails.html', title='Users', users=users,
                            domain='all', companies=companies)
 
 
+# User deletion
 @app.route('/delete/<domain>/<int:user_id>')
-def delete_mail(user_id, domain):
+def delete_account(user_id, domain):
     domain_data = config.DOMAIN_KEY[domain]
     resp = delete_user(user_id, domain_data[1], domain_data[0])
     console_output(resp, 'User deletion')
     return redirect('/mails/{}'.format(domain))
 
 
-@app.route('/edit/<int:userid>', methods=['GET', 'POST'])
-def edit_mail(userid):
+# User editing
+@app.route('/edit/<int:user_id>', methods=['GET', 'POST'])
+def edit_account(user_id):
     users = []
     account = ()
     for d in config.DOMAIN_KEY:
         domain_data = config.DOMAIN_KEY[d]
-        raw_users = get_users(domain_data[1], domain_data[0])
-        this_domain_users = get_user_info(raw_users)
+        this_domain_users = get_users(domain_data[1], domain_data[0])
         users.extend(this_domain_users)
     domain_data = ''
     for i in users:
-        if i[0] == userid:
-            print(i)
+        if i[0] == user_id:
             account = i
             domain_data = config.DOMAIN_KEY[domain_from_login(i[1])]
     form = EditUser()
     form.user_id.data = account[0]
     e = form.validate_on_submit()
-    print(e)
     if form.validate_on_submit():
         resp = edit_user(form.user_id.data, form.name.data,
                          form.sname.data, form.enabled.data,
@@ -86,4 +86,5 @@ def edit_mail(userid):
 
 @app.route('/')
 def index():
+    # Coming soon
     return redirect('/mails')

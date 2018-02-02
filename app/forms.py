@@ -6,7 +6,7 @@ from config import DOMAIN_KEY
 domains = tuple(DOMAIN_KEY.keys())
 
 
-class MailCreator(FlaskForm):
+class AccountCreator(FlaskForm):
     login = StringField('Username', validators=[DataRequired()])
     domain = SelectField('Domain', choices=[(domain,
                                              '@{}'.format(DOMAIN_KEY[domain][0])) for domain in domains])
