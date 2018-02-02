@@ -1,7 +1,7 @@
 import json
 from urllib import request, parse
 from flask import flash
-
+import config
 
 def add_user(username, password, api_key, domain):
     """
@@ -135,3 +135,18 @@ def console_output(response, process):
         flash('{} was finished with status {}, Error decription: {}'
               .format(process, resp['success'], resp['error']))
     return 0
+
+
+def find_user_in_lists(user_id, users_list):
+    """
+    Find user in list of all users
+    :param user_id: user_id, int. We find user with this id
+    :param users_list: List of all users
+    :return: user account data, his domain and domain APIKey/domain name
+    """
+    for user in users_list:
+        if user[0] == user_id:
+            account = user
+            domain = domain_from_login(user[1])
+            domain_data = config.DOMAIN_KEY[domain]
+            return account, domain, domain_data
