@@ -62,6 +62,15 @@ select {
     background: #E0DDDD;
 }
 
+.flex-right {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 5 25 5 25;
+    background: #E0DDDD;
+}
+
 .active-user {
     background: #E0DDDD;
 }
@@ -70,14 +79,6 @@ select {
     background: #E0DDCD;
 }
 
-.main-screen {
-    width: 800px;
-    background: #E0DDDD;
-}
-
-.logs {
-    width: 200px;
-}
 
 .blocks-flex {
     display: flex;
@@ -85,7 +86,7 @@ select {
     justify-content: center;
     align-items: stretch;
     background: #E0DDDD;
-
+    max-width: 1024px;
 }
 
 .header {

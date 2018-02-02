@@ -81,6 +81,13 @@ def edit_account(user_id):
                            user=account[1])
 
 
+# Logs
+@app.route('/messages')
+def messages():
+    return render_template('messages.html', title='Messages',
+                           domain='all', companies=companies)
+
+
 @app.route('/')
 def index():
     # Coming soon
