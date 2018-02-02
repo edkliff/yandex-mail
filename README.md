@@ -3,8 +3,11 @@ Small and simple tool for managment of yandex-pdd mails.
 It can create new mail acoount, delete it, show you list of mail accounts. 
 So, you can connect 1 and more domains to this tool.
 
-ToDo: 
-Mail account editor
+
+## Features
+1) List your domains accounts
+2) Create, remove or edit accounts on your domain
+3) Several domains in one tool
 
 ## Installation
 1) Get your yandex-pdd token/tokens
