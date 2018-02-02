@@ -6,10 +6,18 @@
         <table>
             {% for user in users %}
             <tr>
+                 <td>
+                     {% if user[4] %}
+                        Active
+                     {% else %}
+                        Not Active
+                     {% endif %}
+                 </td>
                 <td><a href="/edit/{{ user[0] }}">{{ user[1] }}</a></td>
                 <td>{{ user[2] }}</td>
                 <td>{{ user[3] }}</td>
                 <td><a href="/delete/{{ user[5] }}/{{ user[0] }}">Delete User</a></td>
+                <td><a href="/edit/{{ user[0] }}">Edit User</a></td>
             </tr>
             {% endfor %}
         </table>

@@ -1,7 +1,7 @@
 from app import app
 from app.forms import MailCreator, EditUser
 from flask import render_template, redirect, flash
-from functions import get_user_info, get_users, add_user, delete_user, response_parse
+from functions import get_user_info, get_users, add_user, delete_user, domain_from_login, response_parse, edit_user
 import config
 
 
@@ -69,23 +69,33 @@ def edit_mail(userid):
         raw_users = get_users(domain_data[1], domain_data[0])
         this_domain_users = get_user_info(raw_users)
         users.extend(this_domain_users)
+    domain_data = ''
     for i in users:
         if i[0] == userid:
             print(i)
             account = i
+            domain_data = config.DOMAIN_KEY[domain_from_login(i[1])]
     form = EditUser()
     form.user_id.data = account[0]
+    e = form.validate_on_submit()
+    print(e)
+    if form.validate_on_submit():
+        resp = edit_user(form.user_id.data, form.name.data,
+                         form.sname.data, form.enabled.data,
+                         domain_data[1], domain_data[0])
+        resp = response_parse(resp)
+        if resp['success'] == 'ok':
+            flash('User editing was finished with status {}, User: {}, UID: {}'
+                  .format(resp['success'], resp['login'], resp['uid']))
+        else:
+            flash('User editing was finished with status {}, Error decription: {}'
+                  .format(resp['success'], resp['error']))
+        return redirect('/mails')
     form.name.data = account[2]
     form.sname.data = account[3]
-    if account[4] == 'yes':
-        form.enabled.data = True
-    else:
-        form.enabled.data = False
-    if form.validate_on_submit():
-        print(form.user_id.data, form.name.data,
-              form.sname.data, form.enabled.data)
+    form.enabled.data = account[4]
     return render_template('edit_user.html', title='Edit user',
-                           form=form, companies=companies)
+                           form=form, companies=companies, user=account[1])
 
 
 @app.route('/')

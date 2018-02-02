@@ -28,7 +28,7 @@ def get_user_info(users_raw):
                                             account['login'],
                                             account['iname'],
                                             account['fname'],
-                                            account['enabled'],
+                                            user_enabled_parser(account['enabled']),
                                             domain_from_login(account['login'])),
                            user_accounts)))
     return users
@@ -36,7 +36,7 @@ def get_user_info(users_raw):
 
 def delete_user(uid, api_key, domain):
     header = {'PddToken': api_key}
-    data = parse.urlencode({'domain': domain, 'uid': uid,}).encode()
+    data = parse.urlencode({'domain': domain, 'uid': uid}).encode()
     req = request.Request(url='https://pddimp.yandex.ru/api2/admin/email/del',
                           data=data, method='POST', headers=header)
     resp = request.urlopen(req).read()
@@ -44,13 +44,33 @@ def delete_user(uid, api_key, domain):
 
 
 def edit_user(uid, name, sname, enabled, api_key, domain):
+    enabled = user_enabled_changer(enabled)
     header = {'PddToken': api_key}
-    data = parse.urlencode({'domain': domain, 'uid': uid, }).encode()
+    data = parse.urlencode({'domain': domain, 'uid': uid,
+                            'iname': name, 'fname': sname,
+                            'enabled': enabled}).encode()
+    print(data)
+    req = request.Request(url='https://pddimp.yandex.ru/api2/admin/email/edit',
+                          data=data, method='POST', headers=header)
+    resp = request.urlopen(req).read()
+    return resp
 
 
 def response_parse(response):
     response_dict = json.loads((response.decode()))
     return response_dict
 
+
 def domain_from_login(login):
     return login.split('@')[1].split('.')[0]
+
+
+def user_enabled_parser(enabled):
+    if enabled == 'yes':
+        return True
+    return False
+
+def user_enabled_changer(enabled):
+    if enabled:
+        return 'yes'
+    return 'no'
