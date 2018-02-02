@@ -10,37 +10,44 @@
     <body>
 
         <center>
-            <div class="main-screen">
+            <div class="header">
                 <h2>Yandex Mail for Domains - Admin Console</h2>
-                    <div class="flex-cont-space-around">
-                        <div>
-                            <a href="/mails">All</a>
-                        </div>
-
-                        {% for company in companies %}
-                            <div>
-                                <a href="/mails/{{ company }}">{{ company }} </a>
-                            </div>
-                        {% endfor %}
-                        <div>
-                            <a href="/new">New User </a>
-                        </div>
+                <div class="flex-cont-space-around">
+                    <div>
+                        <a href="/mails">All</a>
                     </div>
 
-                <hr>
-                {% block content %}{% endblock %}
-
-                <hr>
-                {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                <ul>
-                    {% for message in messages %}
-                        <li>{{ message }}</li>
+                    {% for company in companies %}
+                        <div>
+                            <a href="/mails/{{ company }}">{{ company }} </a>
+                        </div>
                     {% endfor %}
-                </ul>
-                {% endif %}
-                {% endwith %}
+                    <div>
+                        <a href="/new">New User </a>
+                    </div>
+                </div>
+                <hr>
             </div>
+            <div class="blocks-flex">
+                <div class="main-screen">
+                        {% block content %}{% endblock %}
+                    <hr>
+                </div>
+                <div class="logs">
+                    <h5>Messages</h5>
+                    {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                    <ul>
+                        {% for message in messages %}
+                            <li>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                    {% endwith %}
+                </div>
+
+            </div>
+
         </center>
     </body>
 </html>
