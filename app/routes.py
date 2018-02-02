@@ -69,7 +69,6 @@ def edit_account(user_id):
             domain_data = config.DOMAIN_KEY[domain_from_login(i[1])]
     form = EditUser()
     form.user_id.data = account[0]
-    e = form.validate_on_submit()
     if form.validate_on_submit():
         resp = edit_user(form.user_id.data, form.name.data,
                          form.sname.data, form.enabled.data,
