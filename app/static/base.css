@@ -32,8 +32,8 @@ hr {
 
 body {
     font-size: 16px;
-    max-width: 1024px;
     margin: 0 auto;
+    background: #E0CCCC;
 }
 
 hr {
@@ -58,4 +58,21 @@ select {
     flex-direction: row;
     justify-content: space-between;
     align-items: flex-start;
+    margin: 10 15 10 15;
+}
+
+.active-user {
+    background: #E0DDDD;
+}
+
+.non-active-user {
+    background: #E6E6FA;
+}
+
+.main-screen {
+    max-width: 1024px;
+    height 100%;
+    background: #E0DDDD;
+    border: 1px;
+    border-color: black;
 }
