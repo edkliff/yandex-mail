@@ -2,7 +2,7 @@ import json
 from urllib import request, parse
 from flask import flash
 import config
-
+from datetime import datetime
 
 def add_user(username, password, api_key, domain):
     """
@@ -24,6 +24,11 @@ def add_user(username, password, api_key, domain):
     return resp
 
 
+def get_birthday(date):
+    if date:
+        return datetime.strptime(date, '%Y-%m-%d')
+    return ''
+
 def get_users(api_key, domain):
     """
     Get users list by domain with Yandex API
@@ -43,7 +48,9 @@ def get_users(api_key, domain):
                                             account['iname'],
                                             account['fname'],
                                             user_enabled_parser(account['enabled']),
-                                            domain_from_login(account['login'])),
+                                            domain_from_login(account['login']),
+                                            get_birthday(account['birth_date']),
+                                            account['sex']),
                            user_accounts)))
     return users
 
@@ -65,7 +72,7 @@ def delete_user(uid, api_key, domain):
     return resp
 
 
-def edit_user(uid, name, sname, enabled, api_key, domain):
+def edit_user(uid, name, sname, enabled, api_key, domain, birthday, gender):
     """
     User editing with Yandex API, you can change name, last name, enable or disable user
 
@@ -81,7 +88,8 @@ def edit_user(uid, name, sname, enabled, api_key, domain):
     header = {'PddToken': api_key}
     data = parse.urlencode({'domain': domain, 'uid': uid,
                             'iname': name, 'fname': sname,
-                            'enabled': enabled}).encode()
+                            'enabled': enabled, 'birth_date': str(birthday),
+                            'sex': gender}).encode()
     req = request.Request(url='https://pddimp.yandex.ru/api2/admin/email/edit',
                           data=data, method='POST', headers=header)
     resp = request.urlopen(req).read()

@@ -5,6 +5,7 @@ from functions import get_users, add_user, edit_user, find_user_in_lists
 from functions import delete_user, console_output
 import config
 
+
 # List of all companies
 companies = tuple(config.DOMAIN_KEY.keys())
 
@@ -94,13 +95,22 @@ def edit_account(user_id):
     if form.validate_on_submit():
         resp = edit_user(form.user_id.data, form.name.data,
                          form.sname.data, form.enabled.data,
-                         domain_data[1], domain_data[0])
+                         domain_data[1], domain_data[0],
+                         form.birth_date.data, form.sex.data)
         console_output(resp, 'User editing')
+        print(form.birth_date.data, form.user_id.data, form.name.data,
+              form.sname.data, form.enabled.data,
+              domain_data[1], domain_data[0], form.birth_date.data, form.sex.data)
         return redirect('/mails/{}'.format(domain))
 
     form.name.data = account[2]
     form.sname.data = account[3]
     form.enabled.data = account[4]
+    form.birth_date.data = account[6]
+    form.sex.data = str(account[7])
+    print(form.birth_date.data, form.user_id.data, form.name.data,
+          form.sname.data, form.enabled.data,
+          domain_data[1], domain_data[0], form.birth_date.data, form.sex.data)
     return render_template('edit_user.html', title='Edit user',
                            form=form, companies=companies,
                            user=account[1])

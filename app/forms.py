@@ -2,6 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, SelectField, BooleanField
 from wtforms.validators import DataRequired
 from config import DOMAIN_KEY
+from wtforms.fields.html5 import DateField
 
 domains = tuple(DOMAIN_KEY.keys())
 
@@ -19,4 +20,7 @@ class EditUser(FlaskForm):
     name = StringField('First Name')
     sname = StringField('Second Name')
     enabled = BooleanField('Enabled')
+    # password = PasswordField('New Password for user')
+    sex = SelectField('Gender', choices=[('0', 'N/A'), ('1', 'Male'), ('2', 'Female')])
+    birth_date = DateField('Birthday Date', description='YYYY-MM-DD', format='%Y-%m-%d')
     submit = SubmitField('Edit User')
