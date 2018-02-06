@@ -36,6 +36,9 @@ def get_users(api_key, domain):
     :param api_key: Yandex API Key
     :param domain: domain in Yandex PDD
     :return: list of users
+    0 - uid, 1 - login, 2 - name, 3 - second name, 4- enabled, 5 - login,
+    6 - birthday, 7 - sex, 8 - hintq, 9 - ready, 10 - fio,
+    12 - aliases(in future)
     """
     header = {'PddToken': api_key}
     url = 'https://pddimp.yandex.ru/api2/admin/email/list?domain={}&page=1&on_page=150'.format(domain)
@@ -43,6 +46,7 @@ def get_users(api_key, domain):
     resp = request.urlopen(req).read()
     user_accounts = json.loads(resp.decode())['accounts']
     users = []
+    ## !!!!NEED REWRITE FOR DICT!!!!
     users.extend(tuple(map(lambda account: (account['uid'],
                                             account['login'],
                                             account['iname'],
@@ -50,7 +54,8 @@ def get_users(api_key, domain):
                                             user_enabled_parser(account['enabled']),
                                             domain_from_login(account['login']),
                                             get_birthday(account['birth_date']),
-                                            account['sex']),
+                                            account['sex'], account['hintq'],
+                                            account['ready'], account['fio']),
                            user_accounts)))
     return users
 
@@ -72,7 +77,7 @@ def delete_user(uid, api_key, domain):
     return resp
 
 
-def edit_user(uid, name, sname, enabled, api_key, domain, birthday, gender):
+def edit_user(uid, name, sname, enabled, api_key, domain, birthday, gender, hintq, hinta):
     """
     User editing with Yandex API, you can change name, last name, enable or disable user
 
@@ -86,10 +91,15 @@ def edit_user(uid, name, sname, enabled, api_key, domain, birthday, gender):
     """
     enabled = user_enabled_changer(enabled)
     header = {'PddToken': api_key}
-    data = parse.urlencode({'domain': domain, 'uid': uid,
-                            'iname': name, 'fname': sname,
-                            'enabled': enabled, 'birth_date': str(birthday),
-                            'sex': gender}).encode()
+    data_dict = {'domain': domain, 'uid': uid,
+                 'iname': name, 'fname': sname,
+                 'enabled': enabled, 'birth_date': str(birthday),
+                 'sex': gender, 'hintq': hintq}
+    if hinta != 'no':
+        data_dict.update({'hinta': hinta})
+    print(hinta)
+
+    data = parse.urlencode(data_dict).encode()
     req = request.Request(url='https://pddimp.yandex.ru/api2/admin/email/edit',
                           data=data, method='POST', headers=header)
     resp = request.urlopen(req).read()

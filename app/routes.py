@@ -96,11 +96,13 @@ def edit_account(user_id):
         resp = edit_user(form.user_id.data, form.name.data,
                          form.sname.data, form.enabled.data,
                          domain_data[1], domain_data[0],
-                         form.birth_date.data, form.sex.data)
+                         form.birth_date.data, form.sex.data,
+                         form.hintq.data, form.hinta.data)
         console_output(resp, 'User editing')
         print(form.birth_date.data, form.user_id.data, form.name.data,
               form.sname.data, form.enabled.data,
-              domain_data[1], domain_data[0], form.birth_date.data, form.sex.data)
+              domain_data[1], domain_data[0], form.birth_date.data,
+              form.sex.data, form.hintq.data, form.hinta.data)
         return redirect('/mails/{}'.format(domain))
 
     form.name.data = account[2]
@@ -108,9 +110,12 @@ def edit_account(user_id):
     form.enabled.data = account[4]
     form.birth_date.data = account[6]
     form.sex.data = str(account[7])
+    form.hintq.data = account[8]
+    form.hinta.data = account[9]
     print(form.birth_date.data, form.user_id.data, form.name.data,
           form.sname.data, form.enabled.data,
-          domain_data[1], domain_data[0], form.birth_date.data, form.sex.data)
+          domain_data[1], domain_data[0], form.birth_date.data,
+          form.sex.data, form.hintq.data, form.hinta.data)
     return render_template('edit_user.html', title='Edit user',
                            form=form, companies=companies,
                            user=account[1])
