@@ -95,7 +95,7 @@ def edit_user(uid, name, sname, enabled, api_key, domain, birthday, gender, hint
                  'iname': name, 'fname': sname,
                  'enabled': enabled, 'birth_date': str(birthday),
                  'sex': gender, 'hintq': hintq}
-    if hinta != 'no':
+    if hinta != 'no' and hinta != 'yes':
         data_dict.update({'hinta': hinta})
     print(hinta)
 
