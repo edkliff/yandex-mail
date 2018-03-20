@@ -4,6 +4,7 @@ from flask import flash
 import config
 from datetime import datetime
 
+
 def add_user(username, password, api_key, domain):
     """
     Yandex API POST request for user creation
@@ -28,6 +29,7 @@ def get_birthday(date):
     if date:
         return datetime.strptime(date, '%Y-%m-%d')
     return ''
+
 
 def get_users(api_key, domain):
     """

@@ -1,8 +1,8 @@
 from app import app
 from app.forms import AccountCreator, EditUser
 from flask import render_template, redirect
-from functions import get_users, add_user, edit_user, find_user_in_lists
-from functions import delete_user, console_output
+from app.functions import get_users, add_user, edit_user, find_user_in_lists
+from app.functions import delete_user, console_output
 import config
 
 
